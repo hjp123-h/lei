@@ -24,7 +24,7 @@ import java.util.List;
 @Api(description="课程分类管理")
 @CrossOrigin //跨域
 @RestController
-@RequestMapping("/edus/subject")
+@RequestMapping("/edu/subject")
 public class EduSubjectController {
 
     @Autowired
@@ -59,9 +59,16 @@ public class EduSubjectController {
     @GetMapping("allsubject")
     public R allSubject(){
 
+        /**
+         *
+         * @description: 获取所有课程列表
+         * @author: Hjp
+         * @time: 2020/7/26 15:03
+         */
+
         List<OneSubject> oneSubjectList = subjectService.addSubject();
 
-        return R.ok().data("list",oneSubjectList);
+        return R.ok().data("items",oneSubjectList);
     }
 
 }
