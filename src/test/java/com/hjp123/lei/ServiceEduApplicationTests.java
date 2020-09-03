@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ServiceEduApplicationTests {
 
+    @Test
     void test() {
         // 1、创建代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -43,7 +44,7 @@ class ServiceEduApplicationTests {
         dsc.setUrl("jdbc:mysql://localhost:3306/lei?serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setPassword("Hanjiapeng4037-");
         dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
 
@@ -59,7 +60,7 @@ class ServiceEduApplicationTests {
 
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("edu_subject");
+        strategy.setInclude("edu_course","edu_course_description","edu_chapter","edu_video");
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         //strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
 

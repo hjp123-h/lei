@@ -40,4 +40,5 @@ public class EduLoginController {
 
         return R.ok().data("roles","管理员").data("name","韩佳鹏").data("avatar","https://guli-file-190513.oss-cn-beijing.aliyuncs.com/avatar/default.jpg");
     }
+
 }
