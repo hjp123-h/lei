@@ -1,10 +1,13 @@
 package com.hjp123.lei.service.edu.controller;
 
 
+import com.hjp123.lei.common.base.Exception.LeiException;
 import com.hjp123.lei.common.code.R;
 import com.hjp123.lei.service.edu.bean.EduVideo;
+import com.hjp123.lei.service.edu.client.VodClient;
 import com.hjp123.lei.service.edu.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +25,9 @@ public class EduVideoController {
 
     @Autowired
     private EduVideoService eduVideoService;
+
+    @Autowired
+    private VodClient vodClient;
 
     /**
      *
@@ -48,9 +54,18 @@ public class EduVideoController {
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id){
 
-        boolean status = eduVideoService.removeById(id);
+        EduVideo video = eduVideoService.getById(id);
+        if (video != null && !StringUtils.isEmpty(video.getVideoSourceId())){
 
-        return status?R.ok():R.error().message("出错了，请稍后再试~");
+            //采用nacos远程调用vod中的方法
+            R r = vodClient.removeVideo(video.getVideoSourceId());
+            if (r.getCode() == 20001){
+                throw new LeiException(20001,"服务熔断了");
+            }
+            boolean status = eduVideoService.removeById(id);
+            return status?R.ok():R.error().message("出错了，请稍后再试~");
+        }
+        return R.error().message("小节不存在~");
     }
     
     /**

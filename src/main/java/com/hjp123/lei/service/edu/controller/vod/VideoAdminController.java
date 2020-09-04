@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @description: 阿里云视频服务类
  * @author: Hjp
@@ -49,6 +51,21 @@ public class VideoAdminController {
     public R removeVideo(@PathVariable String id){
 
         boolean status = videoService.removeVideo(id);
+
+        return R.ok();
+    }
+
+    /**
+     *
+     * @description: 批量删除视频接口
+     * @author: Hjp
+     * @time: 2020/9/3 10:46
+     */
+
+    @DeleteMapping("removes")
+    public R removeVideos(@RequestParam List ids){
+
+        boolean status = videoService.removeVideos(ids);
 
         return R.ok();
     }

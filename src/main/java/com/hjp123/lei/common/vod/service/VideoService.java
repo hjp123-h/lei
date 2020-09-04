@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @description: 阿里云视频操作类
@@ -90,6 +91,42 @@ public class VideoService {
 
             //设置删除id
             request.setVideoIds(id);
+
+            //发送获取回调数据
+            DeleteVideoResponse response = client.getAcsResponse(request);
+
+            System.out.print("RequestId = " + response.getRequestId() + "\n");
+
+            return true;
+        } catch (ClientException e) {
+            e.printStackTrace();
+
+            throw new LeiException(20001,"删除失败，请稍后再试");
+        }
+
+    }
+
+    /**
+     *
+     * @description: 批量删除视频
+     * @author: Hjp
+     * @time: 2020/9/3 21:54
+     */
+
+    public boolean removeVideos(List ids) {
+
+        try {
+            //初始化
+            DefaultAcsClient client = AliyunVodSDKUtils.initVodClient(accessKeyId,accessKeySecret);
+
+            //创建删除对象
+            DeleteVideoRequest request = new DeleteVideoRequest();
+
+            //拼接id值
+            String join = String.join(",", ids);
+
+            //设置批量删除id
+            request.setVideoIds(join);
 
             //发送获取回调数据
             DeleteVideoResponse response = client.getAcsResponse(request);

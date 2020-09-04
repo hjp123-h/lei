@@ -193,6 +193,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         baseMapper.selectPage(pageParam, queryWrapper);
     }
 
+    /**
+     *
+     * @description: 删除课程所有信息
+     * @author: Hjp
+     * @time: 2020/9/3 22:04
+     */
+
     @Override
     @Transactional(rollbackFor  = LeiException.class)
     public boolean removeCourseId(String courseId) {
